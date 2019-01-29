@@ -1,0 +1,41 @@
+buildscript {
+    ext {
+        artifact_id = 'starter'
+    }
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'kotlin-platform-common'
+apply plugin: 'maven-publish'
+
+version = project_version
+archivesBaseName = artifact_id
+group = project_group_id
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId project_group_id
+            artifactId artifact_id
+            from components.java
+        }
+    }
+}
+
+dependencies {
+    implementation "com.noheltcj:rx-common:$rx_common_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
+
+    testImplementation "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
+}

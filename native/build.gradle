@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
+    } 
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-native-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'konan'
+
+konanArtifacts {
+    framework('Starter', targets: ['iphone', 'iphone_sim', 'macbook']) {
+        enableMultiplatform true
+        extraOpts '-module-name', 'ST'
+
+        target('iphone_sim') {
+            libraries {
+                useRepo 'lib/ios_x64'
+                noStdLib true
+                klib 'RxCommon'
+            }
+        }
+
+        target('iphone') {
+            libraries {
+                useRepo 'lib/ios_arm64'
+                noStdLib true
+                klib 'RxCommon'
+            }
+        }
+
+        target('macbook') {
+            libraries {
+                useRepo 'lib/macos_x64'
+                noStdLib true
+                klib 'RxCommon'
+            }
+        }
+    }
+}
+
+dependencies {
+    expectedBy project(':common')
+}
