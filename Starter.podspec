@@ -9,9 +9,9 @@ Pod::Spec.new do |s|
   s.requires_arc            = true
   s.module_name             = "ST"
   s.source                  = { :http => 'https://s3.us-east-2.amazonaws.com/starter-archive/0.0.1/Starter.zip' }
-  s.source_files            = 'build/ios/release/Starter.framework/Headers/*.h'
-  s.resource                = 'build/ios/release/Starter.framework/Info.plist'
-  s.public_header_files     = 'build/ios/release/Starter.framework/Headers/*.h'
+  s.source_files            = 'build/native/release/Starter.framework/Headers/*.h'
+  s.resource                = 'build/native/release/Starter.framework/Info.plist'
+  s.public_header_files     = 'build/native/release/Starter.framework/Headers/*.h'
   s.ios.deployment_target   = '11.0'
-  s.ios.vendored_frameworks = 'build/ios/release/Starter.framework'
+  s.ios.vendored_frameworks = 'build/native/release/Starter.framework'
 end

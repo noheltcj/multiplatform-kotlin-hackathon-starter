@@ -9,18 +9,18 @@ if ! [ -x "$(command -v lipo)" ]; then
   exit 1
 fi
 
-mkdir -p build/ios/release/Starter.framework
+mkdir -p build/native/release/Starter.framework
 
 lipo -create \
-  -output build/ios/release/Starter.framework/Starter \
-  ios/build/konan/bin/ios_arm64/Starter.framework/Starter \
-  ios/build/konan/bin/ios_x64/Starter.framework/Starter\
+  -output build/native/release/Starter.framework/Starter \
+  native/build/konan/bin/ios_arm64/Starter.framework/Starter \
+  native/build/konan/bin/ios_x64/Starter.framework/Starter\
 
-cp -R ios/build/konan/bin/ios_arm64/Starter.framework/Headers build/ios/release/Starter.framework
-cp -R ios/build/konan/bin/ios_arm64/Starter.framework/Modules build/ios/release/Starter.framework
-cp ios/build/konan/bin/ios_arm64/Starter.framework/Info.plist build/ios/release/Starter.framework
+cp -R native/build/konan/bin/ios_arm64/Starter.framework/Headers build/native/release/Starter.framework
+cp -R native/build/konan/bin/ios_arm64/Starter.framework/Modules build/native/release/Starter.framework
+cp native/build/konan/bin/ios_arm64/Starter.framework/Info.plist build/native/release/Starter.framework
 
-zip -r build/Starter.zip LICENSE build/ios/release
+zip -r build/Starter.zip LICENSE build/native/release
 
 if ! [ -x "$(command -v pod)" ]; then
   echo 'Error: Coacoapods is not installed.' >&2
