@@ -10,10 +10,10 @@ import com.noheltcj.rxcommon.operators.Operator
 
 class Debounce<E>(
     private val durationInMillis: Long,
-    private val scheduler: Scheduler,
+    private val scheduler: DelayingScheduler,
     private val source: Source<E>
 ) : Operator<E>() {
-    private var cancelable: Scheduler.Cancelable? = null
+    private var cancelable: DelayingScheduler.Cancelable? = null
 
     override val emitter: Emitter<E> = ColdEmitter {
         cancelable?.cancel()

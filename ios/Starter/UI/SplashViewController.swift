@@ -20,8 +20,12 @@ class SplashViewController : UIViewController {
         
         progressIndicator.startAnimating()
         
-        AppDelegate.shared.routingController.showLogin()
-        
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        AppDelegate.shared.routingController.showLogin()
     }
 }

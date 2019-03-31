@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C6033F52251402F00132BDF /* ConcurrentScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6033F42251402F00132BDF /* ConcurrentScheduler.swift */; };
 		8CC69AE32250B1D7006C9ED9 /* Aliasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC69ADD2250B1D7006C9ED9 /* Aliasing.swift */; };
 		8CC69AE42250B1D7006C9ED9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC69ADE2250B1D7006C9ED9 /* Constants.swift */; };
 		8CC69AE52250B1D7006C9ED9 /* Injector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC69ADF2250B1D7006C9ED9 /* Injector.swift */; };
@@ -46,6 +47,7 @@
 		343EAED08B1423F657EA072B /* Pods-StarterTargets-Starter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StarterTargets-Starter.release.xcconfig"; path = "Target Support Files/Pods-StarterTargets-Starter/Pods-StarterTargets-Starter.release.xcconfig"; sourceTree = "<group>"; };
 		59DEA4C95D01AABF9F05B98B /* Pods-StarterTargets-Starter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StarterTargets-Starter.debug.xcconfig"; path = "Target Support Files/Pods-StarterTargets-Starter/Pods-StarterTargets-Starter.debug.xcconfig"; sourceTree = "<group>"; };
 		7D9B82DB6E470682BD1ABFE3 /* Pods_StarterTargets_Starter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StarterTargets_Starter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C6033F42251402F00132BDF /* ConcurrentScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentScheduler.swift; sourceTree = "<group>"; };
 		8CC69AA42250AADA006C9ED9 /* Starter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Starter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CC69ADD2250B1D7006C9ED9 /* Aliasing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Aliasing.swift; sourceTree = "<group>"; };
 		8CC69ADE2250B1D7006C9ED9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -112,6 +114,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8C6033F32251400300132BDF /* Scheduler */ = {
+			isa = PBXGroup;
+			children = (
+				8C6033F42251402F00132BDF /* ConcurrentScheduler.swift */,
+			);
+			path = Scheduler;
+			sourceTree = "<group>";
+		};
 		8CC69A9B2250AADA006C9ED9 = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +162,7 @@
 		8CC69AE72250B1F3006C9ED9 /* Adapter */ = {
 			isa = PBXGroup;
 			children = (
+				8C6033F32251400300132BDF /* Scheduler */,
 				8CC69AE82250B1F3006C9ED9 /* StorageAdapterImpl.swift */,
 				8CC69AE92250B1F3006C9ED9 /* ApiAdapterImpl.swift */,
 				8CC69AEA2250B1F3006C9ED9 /* Entity */,
@@ -319,6 +330,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Info.plist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -426,6 +438,7 @@
 				8CC69B182250B218006C9ED9 /* UnrecoverableError.swift in Sources */,
 				8CC69B252250B218006C9ED9 /* UIControl+Binding.swift in Sources */,
 				8CC69AF92250B1F3006C9ED9 /* UserResponse.swift in Sources */,
+				8C6033F52251402F00132BDF /* ConcurrentScheduler.swift in Sources */,
 				8CC69AE32250B1D7006C9ED9 /* Aliasing.swift in Sources */,
 				8CC69B172250B218006C9ED9 /* UnknownError.swift in Sources */,
 				8CC69AFD2250B1F3006C9ED9 /* AuthorizationMapper.swift in Sources */,

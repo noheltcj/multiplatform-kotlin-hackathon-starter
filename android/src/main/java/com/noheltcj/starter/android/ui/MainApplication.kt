@@ -6,11 +6,11 @@ import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.noheltcj.starter.android.di.component.DaggerApplicationComponent
 import com.noheltcj.starter.android.di.module.ApplicationModule
-import com.noheltcj.starter.android.extension.SuspendingScheduler
-import com.noheltcj.starter.extension.Scheduler
+import com.noheltcj.starter.android.extension.DelayedOperationScheduler
 import com.noheltcj.starter.presentation.ApplicationViewModel
 import com.noheltcj.rxcommon.observers.NextObserver
 import com.noheltcj.starter.android.ui.activity.LoginActivity
+import com.noheltcj.starter.extension.Schedulers
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -29,7 +29,7 @@ class MainApplication : Application(), HasSupportFragmentInjector, HasActivityIn
     override fun onCreate() {
         super.onCreate()
 
-        Scheduler.instance = SuspendingScheduler()
+        Schedulers.delayingScheduler = DelayedOperationScheduler()
 
         DaggerApplicationComponent.builder()
             .applicationModule(ApplicationModule(this))

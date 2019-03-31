@@ -174,7 +174,6 @@ class SignInViewController: UIViewController {
             width: view.bounds.width,
             height: subviewsHeight + marginOffset + keyboardOffset
         )
-        print(scrollView.contentSize)
     }
     
     deinit {

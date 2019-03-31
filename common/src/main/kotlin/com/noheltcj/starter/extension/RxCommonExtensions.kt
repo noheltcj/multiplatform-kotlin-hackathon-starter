@@ -19,7 +19,7 @@ fun <E, O: E> Source<MutableList<E>>.chainedCombineLatest(otherSource: Source<O>
     }
 }
 
-fun <E> Source<E>.debounce(timespan: Long) = Debounce(timespan, Scheduler.instance, this)
+fun <E> Source<E>.debounce(timespan: Long) = Debounce(timespan, Schedulers.delayingScheduler, this)
 
 fun <E> Source<E?>.filterNotNull() =
     filter {
