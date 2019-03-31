@@ -1,3 +1,2 @@
-package com.noheltcj.starter.android.adapter.room
+package com.noheltcj.starter.serialization
 
-expect annotation class PrimaryKey

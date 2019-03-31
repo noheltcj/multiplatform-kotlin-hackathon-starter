@@ -1,28 +1,28 @@
-package com.noheltcj.artist.presentation
+package com.noheltcj.starter.presentation
 
-import com.noheltcj.artist.adapter.ApiAdapter
-import com.noheltcj.artist.adapter.LocalizationAdapter
-import com.noheltcj.artist.domain.AuthInteractor
-import com.noheltcj.artist.adapter.localization.StringResource
-import com.noheltcj.artist.binding.BindingRelay
-import com.noheltcj.artist.di.Inject
-import com.noheltcj.artist.domain.ValidationInteractor
-import com.noheltcj.artist.presentation.entity.FieldState
+import com.noheltcj.starter.adapter.ApiAdapter
+import com.noheltcj.starter.adapter.LocalizationAdapter
+import com.noheltcj.starter.domain.AuthInteractor
+import com.noheltcj.starter.adapter.localization.StringResource
+import com.noheltcj.starter.binding.BindingRelay
+import com.noheltcj.starter.di.Inject
+import com.noheltcj.starter.domain.ValidationInteractor
 import com.noheltcj.rxcommon.disposables.CompositeDisposeBag
-import com.noheltcj.rxcommon.observers.NextObserver
+import com.noheltcj.rxcommon.observables.Single
 import com.noheltcj.rxcommon.observers.NextTerminalObserver
 import com.noheltcj.rxcommon.operators.combineLatest
 import com.noheltcj.rxcommon.subjects.BehaviorRelay
+import com.noheltcj.starter.extension.*
 
 class LoginViewModel @Inject constructor(
     private val authInteractor: AuthInteractor,
     private val validationInteractor: ValidationInteractor,
     private val localizationAdapter: LocalizationAdapter
 ) {
-    private var emailFieldState = FieldState.PRISTINE
-    private var passwordFieldState = FieldState.PRISTINE
-
     private val compositeDisposeBag = CompositeDisposeBag()
+
+    private lateinit var emailTouched: Single<Unit>
+    private lateinit var passwordTouched: Single<Unit>
 
     val navigationEvents = BehaviorRelay<NavigationEvent>(NavigationEvent.Stay)
 
@@ -37,7 +37,9 @@ class LoginViewModel @Inject constructor(
     val submitEnabled = BehaviorRelay(false)
 
     fun onInit() {
-        observeAndValidateFields()
+        observeAndValidateEmail()
+        observeAndValidatePassword()
+        observeSubmissionConcerns()
     }
 
     fun onLoginTapped() {
@@ -92,34 +94,45 @@ class LoginViewModel @Inject constructor(
         navigationEvents.onNext(NavigationEvent.Stay)
     }
 
-    fun onCleared() {
+    fun onCleanup() {
         compositeDisposeBag.dispose()
     }
 
-    private fun observeAndValidateFields() {
-        val disposable = emailField.combineLatest(passwordField)
-            .subscribe(NextObserver { (email, password) ->
-                if (email.isNotBlank()) emailFieldState = FieldState.DIRTY
-                if (password.isNotBlank()) passwordFieldState = FieldState.DIRTY
-
-                if (emailFieldState == FieldState.DIRTY && !validationInteractor.isValidEmail(email)) {
-                    emailFieldError.onNext(localizationAdapter[StringResource.LoginInvalidEmail])
+    private fun observeAndValidateEmail() {
+        emailTouched = emailField.filter { it.isNotBlank() }.first().toCompletable()
+        val validationError = emailField.combineLatest(emailTouched)
+            .debounce(VALIDATION_DELAY)
+            .map { (email, _) ->
+                if (validationInteractor.isValidEmail(email)) {
+                    null
                 } else {
-                    emailFieldError.onNext(null)
+                    localizationAdapter[StringResource.LoginInvalidEmail]
                 }
+            }
+        compositeDisposeBag.add(emailFieldError.subscribeTo(validationError))
+    }
 
-                if (passwordFieldState == FieldState.DIRTY && !validationInteractor.isValidPassword(password)) {
-                    passwordFieldError.onNext(localizationAdapter[StringResource.LoginInvalidPassword])
+    private fun observeAndValidatePassword() {
+        passwordTouched = passwordField.filter { it.isNotBlank() }.first().toCompletable()
+        val validationError = passwordField.combineLatest(passwordTouched)
+            .debounce(VALIDATION_DELAY)
+            .map { (email, _) ->
+                if (validationInteractor.isValidPassword(email)) {
+                    null
                 } else {
-                    passwordFieldError.onNext(null)
+                    localizationAdapter[StringResource.LoginInvalidPassword]
                 }
+            }
+        compositeDisposeBag.add(passwordFieldError.subscribeTo(validationError))
+    }
 
-                submitEnabled.onNext(emailFieldState == FieldState.DIRTY
-                    && passwordFieldState == FieldState.DIRTY
-                    && emailFieldError.value == null
-                    && passwordFieldError.value == null)
-            })
-        compositeDisposeBag.add(disposable)
+    private fun observeSubmissionConcerns() {
+        val validEmailSource = emailTouched.combineLatest(emailFieldError) { _, error -> error == null }
+        val validPasswordSource = passwordTouched.combineLatest(passwordFieldError) { _, error -> error == null }
+        val enableSubmitSource = validEmailSource.combineLatest(validPasswordSource) { validEmail, validPassword ->
+            validEmail && validPassword
+        }
+        compositeDisposeBag.add(submitEnabled.subscribeTo(enableSubmitSource))
     }
 
     sealed class NavigationEvent {
@@ -127,5 +140,9 @@ class LoginViewModel @Inject constructor(
         object ShowHome : NavigationEvent()
         object ShowForgotPassword : NavigationEvent()
         data class ShowErrorAlert(val title: String, val message: String) : NavigationEvent()
+    }
+
+    companion object {
+        const val VALIDATION_DELAY = 400L
     }
 }

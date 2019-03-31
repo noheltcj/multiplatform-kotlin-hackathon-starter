@@ -1,0 +1,23 @@
+<resources>
+    <!-- Constants -->
+    <string name="app_name">Starter</string>
+    <string name="client_id" translatable="false">b3fa7c49baab4bb8838d8d7b69360956</string>
+
+    <!-- General -->
+    <string name="generic_error_title">Oops</string>
+    <string name="generic_error_message">An error occurred</string>
+    <string name="ok">OK</string>
+
+    <!-- Login -->
+    <string name="login_title">Sign in</string>
+    <string name="login_email_prompt">Email</string>
+    <string name="login_password_prompt">Password</string>
+    <string name="login_sign_in_button">Sign In</string>
+    <string name="login_sign_in_ime_label">Sign In</string>
+    <string name="login_sign_up_button">Sign Up</string>
+    <string name="login_forgot_password_button">Forgot password</string>
+    <string name="login_invalid_credentials">We didn\'t recognize those credentials</string>
+    <string name="login_invalid_email">Please enter a valid email address</string>
+    <string name="login_invalid_password">Password must be at least 8 characters</string>
+
+</resources>
