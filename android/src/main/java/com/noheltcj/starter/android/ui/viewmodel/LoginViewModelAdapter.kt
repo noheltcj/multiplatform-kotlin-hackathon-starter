@@ -1,6 +1,5 @@
 package com.noheltcj.starter.android.ui.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noheltcj.starter.android.ui.extension.toLiveData
 import com.noheltcj.starter.presentation.LoginViewModel
@@ -21,15 +20,11 @@ class LoginViewModelAdapter @Inject constructor(private val viewModel: LoginView
 
     val submitEnabled = viewModel.submitEnabled.toLiveData(disposeBag)
 
-    val showSignUp = MutableLiveData<Boolean>()
-
     fun onInit() { viewModel.onInit() }
     fun onLoginTapped() { viewModel.onLoginTapped() }
     fun onSignUpTapped() { viewModel.onSignUpTapped() }
     fun onForgotPasswordTapped() { viewModel.onForgotPasswordTapped() }
     fun onNavigationRecognized() { viewModel.onNavigationRecognized() }
-    fun onShowSignUp() { showSignUp.postValue(true) }
-    fun onHideSignUp() { showSignUp.postValue(false) }
 
     override fun onCleared() {
         disposeBag.dispose()

@@ -23,9 +23,9 @@ fun <T> io.reactivex.Flowable<T>.toRxCommon(): Observable<T> {
 fun <T> io.reactivex.Single<T>.toRxCommon(): Single<T> {
     return Single { commonEmitter ->
         val upstreamDisposable = subscribe({
-            commonEmitter.next(it)
+            if (!commonEmitter.isDisposed) commonEmitter.next(it)
         }, {
-            commonEmitter.terminate(it)
+            if (!commonEmitter.isDisposed) commonEmitter.terminate(it)
         })
         Disposables.create {
             upstreamDisposable.dispose()

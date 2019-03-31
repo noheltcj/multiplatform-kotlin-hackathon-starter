@@ -15,17 +15,11 @@ buildscript {
 
         /* Dependencies */
         dagger_version = '2.16'
-        play_services_location_version = '16.0.0'
-        play_services_maps_version = '16.1.0'
-        play_services_places_version = '1.0.0'
         okhttp_logging_interceptor_version = '3.8.1'
         okhttp_version = '3.8.0'
         retrofit_version = '2.4.0'
         junit_version = '4.12'
         rx2_android_version = '2.1.0'
-        glide_version = '4.8.0'
-        flexbox_version = '1.1.0'
-        material_search_bar_version = '0.8.2'
     }
 
     repositories {

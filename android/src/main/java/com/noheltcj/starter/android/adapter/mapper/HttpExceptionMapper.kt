@@ -9,7 +9,6 @@ class HttpExceptionMapper @Inject constructor() {
         return if (throwable is HttpException) {
             ApiAdapter.UnexpectedResponseException(throwable.code())
         } else {
-            throwable.printStackTrace()
             throwable
         }
     }
