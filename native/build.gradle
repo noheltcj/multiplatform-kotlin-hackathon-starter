@@ -11,9 +11,9 @@ buildscript {
 apply plugin: 'konan'
 
 konanArtifacts {
-    framework('Starter', targets: ['iphone', 'iphone_sim', 'macbook']) {
+    framework('StarterCore', targets: ['iphone', 'iphone_sim', 'macbook']) {
         enableMultiplatform true
-        extraOpts '-module-name', 'ST'
+        extraOpts '-module-name', 'EX', '-Xembed-bitcode'
 
         target('iphone_sim') {
             libraries {

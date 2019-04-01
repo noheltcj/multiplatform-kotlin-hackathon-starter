@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="vm" type="com.noheltcj.starter.android.ui.viewmodel.LoginViewModelAdapter"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/login_coordinator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:context=".android.ui.activity.LoginActivity">
+
+        <ProgressBar
+                android:id="@+id/login_progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                app:is_visible="@{vm.showLoader}" />
+
+        <ScrollView
+                android:id="@+id/login_scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <LinearLayout
+                    android:id="@+id/login_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:error="@{vm.emailFieldError}"
+                        app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/login_email_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/login_email_prompt"
+                            android:inputType="textEmailAddress"
+                            android:maxLines="1"
+                            android:text="@={vm.emailField}"
+                            android:singleLine="true"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        app:error="@{vm.passwordFieldError}"
+                        app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/login_password_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/login_password_prompt"
+                            android:imeActionId="6"
+                            android:imeActionLabel="@string/login_sign_in_ime_label"
+                            android:imeOptions="actionUnspecified"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:text="@={vm.passwordField}"
+                            android:singleLine="true"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/login_sign_in_button"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:enabled="@{vm.submitEnabled}"
+                        android:clickable="@{vm.submitEnabled}"
+                        android:onClick="@{() -> vm.onLoginTapped()}"
+                        android:text="@string/login_sign_in_button"
+                        android:textStyle="bold"/>
+
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/login_sign_up_button"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_marginTop="6dp"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:enabled="@{vm.submitEnabled}"
+                        android:clickable="@{vm.submitEnabled}"
+                        android:onClick="@{() -> vm.onSignUpTapped()}"
+                        android:text="@string/login_sign_up_button"
+                        android:textStyle="bold"/>
+
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/login_forgot_password_button"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_marginTop="6dp"
+                        android:backgroundTint="@color/colorTransparent"
+                        android:onClick="@{() -> vm.onForgotPasswordTapped()}"
+                        android:text="@string/login_forgot_password_button"
+                        android:textStyle="italic"/>
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
