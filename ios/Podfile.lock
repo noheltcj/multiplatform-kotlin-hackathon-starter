@@ -526,7 +526,7 @@ DEPENDENCIES:
   - MoreCodable (~> 0.2.0)
   - RxCocoa (~> 4.4.0)
   - RxSwift (~> 4.4.0)
-  - StarterCore (from `../`)
+  - StarterCore (from `../native`)
   - Swinject (~> 2.5.0)
   - SwinjectAutoregistration (~> 2.5.0)
 
@@ -549,7 +549,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   StarterCore:
-    :path: "../"
+    :path: "../native"
 
 SPEC CHECKSUMS:
   JWTDecode: 85a405ab16d5473e99bd89ded1d535090ebd6a0e
@@ -564,10 +564,10 @@ SPEC CHECKSUMS:
   RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
   RxCocoa: 2f35a76bf8887872e28a1914112395b11b8e0e64
   RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
-  StarterCore: 9263273e4a0505c5825c445bf6870f4555a24d50
+  StarterCore: b073ae0df37ebcaf94a4ca0da942b95043d51d8c
   Swinject: 82cdb851f63f91bba974e3eca1d69780f2f7677e
   SwinjectAutoregistration: f72bf894cbd2ee4a9153e00fa5208e93fb44d283
 
-PODFILE CHECKSUM: de0721a6f82a8e7a62de6278e7ecc617417b3a4b
+PODFILE CHECKSUM: 3f9840ef53457bc0adb0d6540e5e1150ae5e05e9
 
 COCOAPODS: 1.6.1

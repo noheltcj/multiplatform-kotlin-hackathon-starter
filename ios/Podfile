@@ -6,7 +6,7 @@ platform :ios, '11.0'
 use_frameworks!
 
 abstract_target "StarterTargets" do
-  pod 'StarterCore', :path => '../'
+  pod 'StarterCore', :path => '../native'
   pod 'RxSwift', '~> 4.4.0'
   pod 'RxCocoa', '~> 4.4.0'
   pod 'KeychainAccess', '~> 3.1.2'
