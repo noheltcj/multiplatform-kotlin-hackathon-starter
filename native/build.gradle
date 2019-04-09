@@ -44,3 +44,40 @@ konanArtifacts {
 dependencies {
     expectedBy project(':common')
 }
+
+task buildPod(type: Sync, dependsOn: 'build') {
+    def commandCheckLipo = 'command -v lipo'
+    if (commandCheckLipo.execute().text.isEmpty()) {
+        throw new GradleException('lipo is not installed.')
+    }
+
+    mkdir 'build/release/StarterCore.framework'
+
+    from('build/konan/bin/ios_arm64/StarterCore.framework') {
+        include 'Headers/**', 'Modules/**', 'Info.plist'
+    }
+    into 'build/release/StarterCore.framework'
+
+    def commandZip = 'zip -r build/StarterCore.zip ../LICENSE build/release'
+    commandZip.execute()
+
+    def commandCocoaPods = 'command -v pod'
+    if (commandCocoaPods.execute().text.isEmpty()) {
+        throw new GradleException('Coacoapods is not installed.')
+    }
+
+    doLast {
+        exec {
+            workingDir '.'
+            commandLine 'sh', '-c', "lipo -create " +
+                    "-output build/release/StarterCore.framework/StarterCore " +
+                    "build/konan/bin/ios_arm64/StarterCore.framework/StarterCore " +
+                    "build/konan/bin/ios_x64/StarterCore.framework/StarterCore"
+        }
+
+        exec {
+            workingDir '.'
+            commandLine 'sh', '-c', 'pod lib lint --verbose'
+        }
+    }
+}
