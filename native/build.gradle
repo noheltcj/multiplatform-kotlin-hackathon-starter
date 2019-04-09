@@ -77,7 +77,7 @@ task buildPod(type: Sync, dependsOn: 'build') {
 
         exec {
             workingDir '.'
-            commandLine 'sh', '-c', 'pod lib  lint --verbose'
+            commandLine 'sh', '-c', 'pod lib lint --verbose'
         }
     }
 }
