@@ -81,3 +81,13 @@ task buildPod(type: Sync, dependsOn: 'build') {
         }
     }
 }
+
+task installPods(type: Exec, dependsOn: 'buildPod') {
+    def commandCocoaPods = 'command -v pod'
+    if (commandCocoaPods.execute().text.isEmpty()) {
+        throw new GradleException('Coacoapods is not installed.')
+    }
+
+    workingDir '../ios'
+    commandLine 'sh', '-c', 'pod install'
+}
