@@ -78,16 +78,13 @@ If you've imported the project correctly into intelliJ or Android Studio, you wi
 ## Preparing and running iOS
 The native portion of the project is compiled to a framework, which is then imported via cocoapods as a vendored framework. You can see examples of accessing the framework throughout the XCode project.
 
-I've supplied a script to make the packaging process easier (it builds more than is necessary and if you want, just remove the pod linting done at the end).
-
-From the base directory:
+To generate the vendored framework and install it via cocoapods, execute the following:
 ```bash
-sh build.sh
+./gradlew :native:installPods
 ```
+The generated workspace is located at `${projectDir}/ios/Starter.xcworkspace`.
 
-Then navigate into the ios directory from the project root and run the following to generate the xcworkspace with the framework.
+To generate the vendored framework by itself _(only necessary if not using cocoapods)_, execute:
 ```bash
-pod install
+./gradlew :native:buildPod
 ```
-
-_Note: I sometimes have to remove Info.plist output in the target Build Phases after pod install_
