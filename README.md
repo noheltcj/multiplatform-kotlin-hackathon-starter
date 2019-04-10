@@ -82,6 +82,7 @@ To generate the vendored framework and install it via cocoapods, execute the fol
 ```bash
 ./gradlew :native:installPods
 ```
+The generated workspace is located at `${projectDir}/ios/Starter.xcworkspace`.
 
 To generate the vendored framework by itself _(only necessary if not using cocoapods)_, execute:
 ```bash
