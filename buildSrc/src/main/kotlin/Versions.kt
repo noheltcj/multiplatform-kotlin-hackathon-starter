@@ -4,6 +4,11 @@ object Versions {
     const val kotlin = "1.3.50"
     const val dokka = "0.10.0"
 
+    object JVM {
+        const val inject = "1"
+        const val gson = "2.8.6"
+    }
+
     object Android {
         const val gradleTools = "3.5.0"
     }

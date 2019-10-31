@@ -85,6 +85,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+                api(Dependencies.rxcommon)
             }
         }
 
@@ -106,6 +107,8 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
+                implementation(Dependencies.JVM.inject)
+                implementation(Dependencies.JVM.gson)
             }
         }
 

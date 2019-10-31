@@ -37,13 +37,13 @@ class LoginActivity : AppCompatActivity() {
             it.setLifecycleOwner(this)
         }
 
-        login_password_field.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
-            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                viewModel.onLoginTapped()
-                return@OnEditorActionListener true
-            }
-            false
-        })
+//        login_password_field.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
+//            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+//                viewModel.onLoginTapped()
+//                return@OnEditorActionListener true
+//            }
+//            false
+//        })
 
         observeNavigationEvents()
 
