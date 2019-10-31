@@ -1,58 +1,179 @@
+@file:Suppress("UnstableApiUsage")
+
+import Publishing.addRepositories
+import Publishing.mutatePublicationPom
+import org.jetbrains.dokka.gradle.DokkaTask
+
 plugins {
     kotlin("multiplatform")
+    id("org.jetbrains.dokka")
+    id("com.android.library")
+    id("maven-publish")
+    signing
 }
 
-repositories {
-    mavenCentral()
+android {
+    compileSdkVersion(29)
+
+    defaultConfig {
+        minSdkVersion(18)
+        targetSdkVersion(29)
+        versionCode = 1
+        versionName = Versions.starter
+    }
+
+    buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+            isDebuggable = true
+        }
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
+}
+
+val dokka by tasks.getting(DokkaTask::class) {
+    outputDirectory = "$buildDir/dokka"
+    outputFormat = "html"
+
+    multiplatform {}
+}
+
+val dokkaJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    archiveClassifier.set("javadoc")
+    from(dokka)
 }
 
 kotlin {
-    jvm()
-    js {
-        browser {}
-        nodejs {}
+    val androidTarget = android {
+        publishLibraryVariants("release", "debug")
     }
-    // For ARM, should be changed to iosArm32 or iosArm64
-    // For Linux, should be changed to e.g. linuxX64
-    // For MacOS, should be changed to e.g. macosX64
-    // For Windows, should be changed to e.g. mingwX64
-    macosX64("macos")
+    val jvmTarget = jvm {
+        mavenPublication {
+            artifact(dokkaJar)
+        }
+    }
+    val jsTarget = js {
+        browser()
+        nodejs()
+    }
+    val iosX64Target = iosX64()
+    val iosArm64Target = iosArm64()
+    val iosArm32Target = iosArm32()
+
+    configure(
+        listOf(
+            metadata(),
+            androidTarget,
+            jvmTarget,
+            jsTarget,
+            iosX64Target,
+            iosArm32Target,
+            iosArm64Target
+        )
+    ) {
+        mavenPublication {
+            artifactId = "starter-core${this.artifactId.substring(8)}"
+
+            mutatePublicationPom(projectName = "starter-core")
+        }
+    }
+
     sourceSets {
-        commonMain {
+        val commonMain by getting {
             dependencies {
-                implementation kotlin('stdlib-common')
+                implementation(kotlin("stdlib-common"))
             }
         }
-        commonTest {
+
+        val commonTest by getting {
             dependencies {
-                implementation kotlin('test-common')
-                implementation kotlin('test-annotations-common')
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
             }
         }
-        jvmMain {
+
+        val nativeMain by creating {
+            dependsOn(commonMain)
+        }
+
+        val nativeTest by creating {
+            dependsOn(commonTest)
+        }
+
+        val jvmMain by getting {
             dependencies {
-                implementation kotlin('stdlib-jdk8')
+                implementation(kotlin("stdlib-jdk8"))
             }
         }
-        jvmTest {
+
+        val jvmTest by getting {
             dependencies {
-                implementation kotlin('test')
-                implementation kotlin('test-junit')
+                implementation(kotlin("test-junit"))
             }
         }
-        jsMain {
+
+        val jsMain by getting {
             dependencies {
-                implementation kotlin('stdlib-js')
+                implementation(kotlin("stdlib-js"))
             }
         }
-        jsTest {
+
+        val jsTest by getting {
             dependencies {
-                implementation kotlin('test-js')
+                implementation(kotlin("test-js"))
             }
         }
-        macosMain {
+
+        val androidMain by getting {
+            dependsOn(jvmMain)
         }
-        macosTest {
+
+        val androidTest by getting {
+            dependsOn(jvmTest)
         }
+
+        val iosArm32Main by getting {
+            dependsOn(nativeMain)
+        }
+
+        val iosArm32Test by getting {
+            dependsOn(nativeTest)
+        }
+
+        val iosArm64Main by getting {
+            dependsOn(nativeMain)
+        }
+
+        val iosArm64Test by getting {
+            dependsOn(nativeTest)
+        }
+
+        val iosX64Main by getting {
+            dependsOn(nativeMain)
+        }
+
+        val iosX64Test by getting {
+            dependsOn(nativeTest)
+        }
+    }
+}
+
+publishing {
+    addRepositories(project)
+    publications.withType<MavenPublication>().apply {
+        val kotlinMultiplatform by getting {
+            artifactId = "starter-core"
+
+            mutatePublicationPom(projectName = "starter-core")
+        }
+    }
+}
+
+signing {
+    if (Properties.isRelease) {
+        sign(publishing.publications)
     }
 }

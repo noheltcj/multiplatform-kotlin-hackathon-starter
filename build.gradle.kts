@@ -1,3 +1,6 @@
+plugins {
+    kotlin("jvm") version "1.3.50"
+}
 buildscript {
     repositories {
         jcenter()
@@ -13,7 +16,7 @@ buildscript {
 
 subprojects {
     group = "com.noheltcj"
-    version = Versions.rxcommon
+    version = Versions.starter
 
     repositories {
         jcenter()
