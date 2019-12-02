@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
         DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login).also {
             it.setVariable(BR.vm, viewModel)
-            it.setLifecycleOwner(this)
+            it.lifecycleOwner = this
         }
 
         login_password_field.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
