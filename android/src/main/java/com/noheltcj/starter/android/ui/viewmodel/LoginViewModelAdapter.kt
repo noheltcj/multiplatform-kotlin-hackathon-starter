@@ -1,9 +1,10 @@
 package com.noheltcj.starter.android.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.noheltcj.starter.android.ui.extension.toLiveData
 import com.noheltcj.starter.presentation.LoginViewModel
 import com.noheltcj.rxcommon.disposables.CompositeDisposeBag
+import com.noheltcj.starter.android.extension.toLiveData
+import com.noheltcj.starter.android.extension.toMutableLiveData
 import javax.inject.Inject
 
 class LoginViewModelAdapter @Inject constructor(private val viewModel: LoginViewModel) : ViewModel() {
@@ -12,10 +13,10 @@ class LoginViewModelAdapter @Inject constructor(private val viewModel: LoginView
     val navigationEvents = viewModel.navigationEvents.toLiveData(disposeBag)
     val showLoader = viewModel.showLoader.toLiveData(disposeBag)
 
-    val emailField = viewModel.emailField.toLiveData(disposeBag)
+    val emailField = viewModel.emailField.toMutableLiveData(disposeBag)
     val emailFieldError = viewModel.emailFieldError.toLiveData(disposeBag)
 
-    val passwordField = viewModel.passwordField.toLiveData(disposeBag)
+    val passwordField = viewModel.passwordField.toMutableLiveData(disposeBag)
     val passwordFieldError = viewModel.passwordFieldError.toLiveData(disposeBag)
 
     val submitEnabled = viewModel.submitEnabled.toLiveData(disposeBag)

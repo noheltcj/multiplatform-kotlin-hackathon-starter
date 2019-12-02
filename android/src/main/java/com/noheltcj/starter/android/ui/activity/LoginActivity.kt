@@ -34,16 +34,16 @@ class LoginActivity : AppCompatActivity() {
 
         DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login).also {
             it.setVariable(BR.vm, viewModel)
-            it.setLifecycleOwner(this)
+            it.lifecycleOwner = this
         }
 
-//        login_password_field.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
-//            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-//                viewModel.onLoginTapped()
-//                return@OnEditorActionListener true
-//            }
-//            false
-//        })
+        login_password_field.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
+            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+                viewModel.onLoginTapped()
+                return@OnEditorActionListener true
+            }
+            false
+        })
 
         observeNavigationEvents()
 

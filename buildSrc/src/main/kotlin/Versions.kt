@@ -1,7 +1,7 @@
 object Versions {
     const val starter = "0.1.0"
     const val rxcommon = "0.6.0"
-    const val kotlin = "1.3.50"
+    const val kotlin = "1.3.60"
     const val dokka = "0.10.0"
 
     object JVM {

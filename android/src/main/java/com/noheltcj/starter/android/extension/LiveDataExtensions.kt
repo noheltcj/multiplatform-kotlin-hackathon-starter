@@ -1,6 +1,8 @@
-package com.noheltcj.starter.android.ui.extension
+package com.noheltcj.starter.android.extension
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.noheltcj.rxcommon.disposables.CompositeDisposeBag
 import com.noheltcj.rxcommon.disposables.Disposables
 import com.noheltcj.rxcommon.observers.NextObserver
@@ -18,15 +20,15 @@ fun <E> Subject<E>.toLiveData(disposeBag: CompositeDisposeBag): LiveData<E> {
     return liveData
 }
 
-fun <E> BindingRelay<E>.toLiveData(disposeBag: CompositeDisposeBag): MutableLiveData<E> {
+fun <E> BindingRelay<E>.toMutableLiveData(disposeBag: CompositeDisposeBag): MutableLiveData<E> {
     val liveData = MutableLiveData<E>()
     val binding = InlineBiDirectionalBinding(
-        onNext = { emission ->
-            liveData.postValue(emission)
-        },
-        relay = this,
-        transformForUpstreamBlock = { it },
-        transformForSubscriberBlock = { it }
+            onNext = { emission ->
+                liveData.postValue(emission)
+            },
+            relay = this,
+            transformForUpstreamBlock = { it },
+            transformForSubscriberBlock = { it }
     )
     val observer = Observer<E> {
         binding.onSubscriberUpdatedLocally(it)

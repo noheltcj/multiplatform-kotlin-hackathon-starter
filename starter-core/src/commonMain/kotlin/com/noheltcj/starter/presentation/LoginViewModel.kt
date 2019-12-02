@@ -78,7 +78,7 @@ class LoginViewModel @Inject constructor(
             }, {
                 showLoader.onNext(false)
                 submitEnabled.onNext(true)
-                navigationEvents.onNext(LoginViewModel.NavigationEvent.ShowErrorAlert(
+                navigationEvents.onNext(NavigationEvent.ShowErrorAlert(
                     title = localizationAdapter[StringResource.GenericErrorTitle],
                     message = localizationAdapter[StringResource.GenericErrorMessage]
                 ))
